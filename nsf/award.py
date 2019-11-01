@@ -121,7 +121,7 @@ class Award:
     def flat_investigators(self):
         investigators = []
         for i in self.investigators:
-            flat_inv = f'{i["full_name"]}, {i["role"]}: {i["email"]}'
+            flat_inv = f'{i["name"]}, {i["role"]}: {i["email"]}'
             investigators.append(flat_inv)
         return '\n'.join(investigators)
 
