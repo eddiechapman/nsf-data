@@ -65,11 +65,11 @@ def main(args):
                     logging.warn(f'Trouble parsing file: {filename}')
                 elif directorate.text.upper() == args.directorate.upper():
                     logging.debug(f'Matching award found: {filename}')
-                    award = Award(xml_soup)
+                    award = Award(soup)
                     logging.debug(f'Award info extracted: {filename}')
                     awards.append(award.flatten())
                 else:
-                    logging.debut(f'No match with directorate: {directorate.text}')
+                    logging.debug(f'No match with directorate: {directorate.text}')
 
     logging.info(f'Filtering complete. Found {len(awards)} awards.')
 
@@ -107,7 +107,7 @@ if __name__ == '__main__':
     )
     parser.add_argument(
         '-d', '--directorate',
-        choices=DIRECTORATES,
+#        choices=DIRECTORATES,
         action='store',
         help='Return the award records in a given directorate.'
     )
