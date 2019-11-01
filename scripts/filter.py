@@ -62,11 +62,16 @@ def main(args):
                 if directorate:
                     directorate = directorate.find('LongName')
                 if not directorate:
-                    logging.warn(f'Trouble parsing file: {filename}')
+                    logging.warn(f'Trouble parsing file: {filename.filename}')
                 elif directorate.text.upper() == args.directorate.upper():
-                    logging.debug(f'Matching award found: {filename}')
-                    award = Award(soup)
-                    logging.debug(f'Award info extracted: {filename}')
+                    logging.debug(f'Matching award found: {filename.filename}')
+                    try:
+                        award = Award(soup)
+                    except Exception as e:
+                        logging.exception(
+                            f'Failed parsing award {filename.file}: {str(e)}'
+                         )
+                    logging.debug(f'Award info extracted: {filename.filename}')
                     awards.append(award.flatten())
                 else:
                     logging.debug(f'No match with directorate: {directorate.text}')
