@@ -56,7 +56,7 @@ if __name__ == '__main__':
         '-o',
         '--outfile',
         action='store',
-        default='./nsf/data',
+        default='../nsf/data',
         help='Write to a particular file rather than the data directory.',
     )
     parser.add_argument(

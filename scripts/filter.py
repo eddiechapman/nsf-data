@@ -9,7 +9,7 @@ import zipfile
 
 import bs4
 
-from award import Award
+from nsf.award import Award
 
 DIRECTORATES = [
     'Directorate for Geosciences',
@@ -99,6 +99,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '-i', '--infile',
         action='store',
+        default='../nsf/data',
         help='The location of the NSF data files.'
     )
     parser.add_argument(
@@ -110,6 +111,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '-o', '--outfile',
         action='store',
+        default='results.csv',
         help='The CSV file where award records will be written.'
     )
     args = parser.parse_args()
