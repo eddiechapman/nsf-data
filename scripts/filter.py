@@ -52,14 +52,15 @@ def main(args):
     awards = []
 
     for z in zip_files:
-        logging.debug(f'Unzipping directory {z}.')
+        logging.info(f'Unzipping directory {z}.')
         with zipfile.ZipFile(z, 'r') as archive:
             for filename in archive.filelist:
-                logging.debug(f'Reading file {filename}')
+                logging.debug(f'Reading file {filename.filename}')
                 xml = archive.read(filename)
                 soup = bs4.BeautifulSoup(xml, 'xml')
-                logging.debug(f'Filtering {filename}')
                 directorate = soup.find('Directorate')
+                if directorate:
+                    directorate = directorate.find('LongName')
                 if not directorate:
                     logging.warn(f'Trouble parsing file: {filename}')
                 elif directorate.text.upper() == args.directorate.upper():
@@ -67,6 +68,8 @@ def main(args):
                     award = Award(xml_soup)
                     logging.debug(f'Award info extracted: {filename}')
                     awards.append(award.flatten())
+                else:
+                    logging.debut(f'No match with directorate: {directorate.text}')
 
     logging.info(f'Filtering complete. Found {len(awards)} awards.')
 
