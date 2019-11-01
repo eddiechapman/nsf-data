@@ -80,7 +80,7 @@ def main(args):
 
     with out_path.open('w') as f:
         logging.info(f'Writing results to file: {args.outfile}')
-        writer = csv.DictWriter(f, fieldnames=award.Award.fieldnames())
+        writer = csv.DictWriter(f, fieldnames=Award.fieldnames())
         writer.writeheader()
         writer.writerows(awards)
     
