@@ -16,6 +16,8 @@ def main(args):
     )
     
     dir_path = pathlib.Path(args.outfile)
+    dir_path.mkdir(exist_ok=True)
+    
     url = 'https://www.nsf.gov/awardsearch/download'
     
     for year in args.years:
@@ -54,8 +56,8 @@ if __name__ == '__main__':
         '-o',
         '--outfile',
         action='store',
-        default='./',
-        help='Write to a particular file rather than the current directory.',
+        default='./nsf/data',
+        help='Write to a particular file rather than the data directory.',
     )
     parser.add_argument(
         'years',
