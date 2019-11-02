@@ -4,9 +4,11 @@ Download zipped XML files of NSF data by year.
 import argparse
 import logging
 import pathlib
+
 import requests
 
-# TODO: Prevent redownloading the same data?
+from nsf.io import download
+
 
 def main(args):
     logging.basicConfig(
@@ -15,25 +17,9 @@ def main(args):
         format='%(levelname)s:%(asctime)s:%(message)s'
     )
     
-    dir_path = pathlib.Path(args.outfile)
-    dir_path.mkdir(exist_ok=True)
-    
-    url = 'https://www.nsf.gov/awardsearch/download'
-    
     for year in args.years:
-        logging.info(f'Requesting award data for year: {year}')
-        params = {'DownloadFileName': year, 'All': 'true'}
-        file_path = dir_path / f'{year}.zip' 
-        try:  
-            r = requests.post(url, params)
-            r.raise_for_status()
-        except requests.exceptions.RequestException as e:
-            logging.exception(e)
-            raise SystemExit
-        with file_path.open('wb') as f:
-            f.write(r.content)
-            logging.info(f'Data for year {year} written to {file_path}')
-    
+        download(year)
+        
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
@@ -53,13 +39,6 @@ if __name__ == '__main__':
         nargs='?',
     )
     parser.add_argument(
-        '-o',
-        '--outfile',
-        action='store',
-        default='../nsf/data',
-        help='Write to a particular file rather than the data directory.',
-    )
-    parser.add_argument(
         'years',
         action='store',
         nargs='*',
@@ -67,3 +46,4 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     main(args)
+
