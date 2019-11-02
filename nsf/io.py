@@ -8,7 +8,20 @@ from requests.exceptions import RequestException
 from nsf import URL, DATA_PATH
 
 
-def iter_zip_files():
+def iter_awards():
+    for z in iter_zip():
+        logging.info(f'Unzipping {z.filename}')
+        for x in iter_xml(z):
+            logging.debug(f'Parsing {x}')
+            try:
+                award = Award(parse_xml(x))
+            except Exception e:
+                logging.exception(f'Error parsing {x}: {str(e)}')
+            else:
+                yield award
+
+
+def iter_zip():
     if not DATA_PATH.exists():
         logging.error(f'Input file not found: {DATA_PATH}')
         raise SystemExit
@@ -22,7 +35,7 @@ def iter_zip_files():
     return (zipfile.ZipFile(f, 'r') for f in zip_files)
 
 
-def iter_xml_files(archive):
+def iter_xml(archive):
     return (f for f in archive.filelist)
 
 
