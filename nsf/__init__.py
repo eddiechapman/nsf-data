@@ -1,7 +1,7 @@
 import pathlib
 
 URL = 'https://www.nsf.gov/awardsearch/download'
-DATA_PATH = pathlib.path('./data')
+DATA_PATH = pathlib.Path('./data')
 DIRECTORATES = [
     'Directorate for Geosciences',
     'National Nanotechnology Coordinating Office',
