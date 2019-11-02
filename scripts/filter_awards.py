@@ -105,6 +105,12 @@ if __name__ == '__main__':
         default='1950-01-01'
     )
     parser.add_argument(
+        '-e', '--end',
+        action='store',
+        help='The latest date to retrieve awards [YYYY-MM-DD]',
+        default=datetime.date.today()
+    )
+    parser.add_argument(
         '-d', '--directorate',
         action='store',
         help='Return the award records in a given directorate.'
