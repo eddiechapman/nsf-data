@@ -2,30 +2,15 @@
 Retrieves NSF records by Directory name and writes them to a CSV file.
 """
 import argparse
+import collections
 import csv
+import datetime
 import logging
 import pathlib
-import zipfile
 
-import bs4
-
-from nsf.award import Award
-
-DIRECTORATES = [
-    'Directorate for Geosciences',
-    'National Nanotechnology Coordinating Office',
-    'Directorate for Engineering',
-    'Directorate for Education & Human Resources',
-    'Directorate for Social, Behavioral & Economic Sciences',
-    'OFFICE OF THE DIRECTOR',
-    'Directorate for Mathematical & Physical Sciences',
-    'Directorate for Biological Sciences',
-    'Office of Polar Programs',
-    'National Coordination Office',
-    'Office of Information & Resource Management',
-    'Directorate for Computer & Information Science & Engineering',
-    'Office of Budget, Finance & Award Management'
-]
+from nsf.io import iter_awards
+from nsf.filters import filter_date, filter_directorate, filter_abstract
+from nsf.keyword import open_keywords, max_phrase_length
 
 
 def main(args):
@@ -34,58 +19,64 @@ def main(args):
         filename='filter.log',
         format='%(levelname)s:%(asctime)s:%(message)s'
     )
-    logging.info(f'Filtering records by {args.directorate}')
-    
-    in_path = pathlib.Path(args.infile)
+
+    start = datetime.date.fromisoformat(args.start)
+    end = datetime.date.fromisoformat(args.start)
     out_path = pathlib.Path(args.outfile)
 
-    if not in_path.exists():
-        logging.error(f'Input file not found: {args.infile}')
-        raise SystemExit
-    
+    logging.info(f'Filtering records by {args.directorate}')
 
-    zip_files = [f for f in in_path.glob('*.zip')]
-    if not zip_files:
-        logging.Error(f'No awards found at path: {args.infile}')
-        raise SystemExit
-
+    c = collections.Counter()
+    keywords = open_keywords()
+    n = max_phrase_length(keywords)
     awards = []
 
-    for z in zip_files:
-        logging.info(f'Unzipping directory {z}.')
-        with zipfile.ZipFile(z, 'r') as archive:
-            for filename in archive.filelist:
-                logging.debug(f'Reading file {filename.filename}')
-                xml = archive.read(filename)
-                soup = bs4.BeautifulSoup(xml, 'xml')
-                directorate = soup.find('Directorate')
-                if directorate:
-                    directorate = directorate.find('LongName')
-                if not directorate:
-                    logging.warn(f'Trouble parsing file: {filename.filename}')
-                elif directorate.text.upper() == args.directorate.upper():
-                    logging.debug(f'Matching award found: {filename.filename}')
-                    try:
-                        award = Award(soup)
-                    except Exception as e:
-                        logging.exception(
-                            f'Failed parsing award {filename.file}: {str(e)}'
-                         )
-                    logging.debug(f'Award info extracted: {filename.filename}')
-                    awards.append(award.flatten())
-                else:
-                    logging.debug(f'No match with directorate: {directorate.text}')
+    for award in iter_awards():
+        logging.debug(f'Filtering award {award.id}')
+        c.update({'awards': 1})
 
-    logging.info(f'Filtering complete. Found {len(awards)} awards.')
+        logging.debug(f'Filtering dates: {start}-{end}')
+        if filter_date(award, start, end):
+            logging.debug(f'...True: {award.effective}')
+            c.update({'date': 1})
+        else:
+            logging.debug(f'...False: {award.effective}')
+            continue
+
+        logging.debug(f'Filtering directorate: {args.directorate}')
+        if filter_directorate(award, args.directorate):
+            logging.debug(f'...True: {award.directorate}')
+            c.update({'directorate': 1})
+        else:
+            logging.debug(f'...False: {award.directorate}')
+            continue
+
+        logging.debug('Filtering keywords')
+        if filter_abstract(award, keywords, n):
+            logging.debug('...True')
+            c.update({'keyword': 1})
+        else:
+            loggin.debug('...False')
+            continue
+
+        awards.append(award)
+        logging.debug(f'Passed all filters: award # {award.id}')
+
+    logging.info('Filtering complete.')
+    logging.info(f'Inspected:      {c["awards"]}')
+    logging.info(f'By date:        {c["date"]}')
+    logging.info(f'By directorate: {c["directorate"]}')
+    logging.info(f'By keyword:     {c["keyword"]}')
+    logging.info(f'Retrieved:      {len(awards)}')
 
     with out_path.open('w') as f:
         logging.info(f'Writing results to file: {args.outfile}')
         writer = csv.DictWriter(f, fieldnames=Award.fieldnames())
         writer.writeheader()
-        writer.writerows(awards)
-    
+        writer.writerows([a.flatten() for a in awards])
+
     logging.info(f'Filtering complete. Results are located: {out_path}')
-        
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
@@ -105,14 +96,13 @@ if __name__ == '__main__':
         nargs='?',
     )
     parser.add_argument(
-        '-i', '--infile',
+        '-s', '--start',
         action='store',
-        default='../nsf/data',
-        help='The location of the NSF data files.'
+        help='The earliest date to retrieve awards [YYYY-MM-DD]',
+        default='1950-01-01'
     )
     parser.add_argument(
         '-d', '--directorate',
-#        choices=DIRECTORATES,
         action='store',
         help='Return the award records in a given directorate.'
     )
