@@ -6,6 +6,7 @@ import requests
 from requests.exceptions import RequestException
 
 from nsf import URL, DATA_PATH
+from nsf.award import Award
 
 
 def iter_awards():
