@@ -18,13 +18,13 @@ def max_phrase_length(keywords):
 def match_keywords(keywords, text, n=None):
     if n is None:
         n = max_phrase_length(keywords)
-    
+
     phrases = set()
-    
+
     for sentence in sent_tokenize(text):
         words = word_tokenize(sentence.lower())
         for i in range(n + 1):
             phrases.update([' '.join(g) for g in ngrams(words, i)]))
-            
+
     return phrases.intersection(keywords)
 
