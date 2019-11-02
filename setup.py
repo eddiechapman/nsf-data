@@ -13,6 +13,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     scripts=['scripts/download.py', 'scripts/filter.py'],
     requires=[
+        'nltk',
         'beautifulsoup4',
         'lxml',
         'requests',
