@@ -108,7 +108,7 @@ if __name__ == '__main__':
         '-e', '--end',
         action='store',
         help='The latest date to retrieve awards [YYYY-MM-DD]',
-        default=datetime.date.today()
+        default=str(datetime.date.today())
     )
     parser.add_argument(
         '-d', '--directorate',
