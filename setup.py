@@ -12,7 +12,7 @@ setuptools.setup(
     url="https://github.com/eddiechapman/nsf-data",
     packages=setuptools.find_packages(),
     scripts=['scripts/download.py', 'scripts/filter_awards.py'],
-    requires=[
+    install_requires=[
         'nltk',
         'beautifulsoup4',
         'lxml',
