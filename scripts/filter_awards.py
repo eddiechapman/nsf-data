@@ -30,7 +30,7 @@ def main(args):
     logging.info(f'Filtering records by {args.directorate}')
 
     c = collections.Counter()
-    keywords = open_keywords()
+    keywords = open_keywords('../nsf/keywords.txt')
     n = max_phrase_length(keywords)
     awards = []
 

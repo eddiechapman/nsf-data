@@ -4,7 +4,7 @@ from nltk import sent_tokenize, word_tokenize
 from nltk.util import ngrams
 
 
-def open_keywords(keyword_path='./keywords.txt'):
+def open_keywords(keyword_path='keywords.txt'):
     p = pathlib.Path(keyword_path)
     with p.open('r') as f:
         return [line.strip().lower() for line in f]
