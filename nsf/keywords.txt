@@ -1,0 +1,48 @@
+anonymized data
+app data
+clickstream
+comment thread    
+digital footprint     
+flickr
+freely available online
+interaction data
+linkedin
+location tracking
+locational data
+log data
+online profile
+pinterest
+private social
+private user
+private user data
+profile data
+public data
+public dataset
+public social
+public user
+quora
+smartphone data
+social data
+social graph
+social media data
+social network data
+transaction data
+user interaction data
+user profile
+user's data
+web scraping
+social computing
+eye gaze data
+social information
+human computer interaction
+physical interaction data
+student emotion
+inferred individual activities
+large-scale social data
+social data sets
+smartphone users
+social technologies
+online social networks
+social media research
+facebook
+twitter
