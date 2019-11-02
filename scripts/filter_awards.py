@@ -20,8 +20,11 @@ def main(args):
         format='%(levelname)s:%(asctime)s:%(message)s'
     )
 
-    start = datetime.date(args.start.split('-'))
-    end = datetime.date(args.end.split('-'))
+    y, m, d = [int(t) for t in args.start.split('-')]
+    start = datetime.date(y, m, d)
+    y, m, d = [int(t) for t in args.end.split('-')]
+    end = datetime.date(y, m, d)
+
     out_path = pathlib.Path(args.outfile)
 
     logging.info(f'Filtering records by {args.directorate}')
