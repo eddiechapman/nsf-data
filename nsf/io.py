@@ -16,7 +16,7 @@ def iter_awards():
             logging.debug(f'Parsing {x}')
             try:
                 award = Award(parse_xml(x))
-            except Exception e:
+            except Exception as e:
                 logging.exception(f'Error parsing {x}: {str(e)}')
             else:
                 yield award
