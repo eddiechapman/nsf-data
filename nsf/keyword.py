@@ -12,7 +12,7 @@ def open_keywords(keyword_path='keywords.txt'):
 
 def max_phrase_length(keywords):
     """The number of words in the longest search phrase."""
-    return max({len(line.split()) for line in search_terms})
+    return max({len(line.split()) for line in keywords})
 
 
 def match_keywords(keywords, text, n=None):
