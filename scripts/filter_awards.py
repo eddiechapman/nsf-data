@@ -20,8 +20,8 @@ def main(args):
         format='%(levelname)s:%(asctime)s:%(message)s'
     )
 
-    start = datetime.date.fromisoformat(args.start)
-    end = datetime.date.fromisoformat(args.start)
+    start = datetime.date(args.start.split('-'))
+    end = datetime.date(args.end.split('-'))
     out_path = pathlib.Path(args.outfile)
 
     logging.info(f'Filtering records by {args.directorate}')
