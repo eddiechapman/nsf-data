@@ -14,7 +14,7 @@ def filter_date(award, start, end):
 
 def filter_directorate(award, directorate):
     return award.directorate == directorate:
-    
+
 
 def filter_abstract(award, keywords):
     return bool(match_keywords(award.abstract, keywords))
