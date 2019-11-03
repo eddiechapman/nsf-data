@@ -19,4 +19,3 @@ setuptools.setup(
         'requests',
     ]
 )
-
