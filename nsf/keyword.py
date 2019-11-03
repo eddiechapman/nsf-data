@@ -1,12 +1,13 @@
 import pathlib
 
+from pkg_resources import resource_string()
 from nltk import sent_tokenize, word_tokenize
 from nltk.util import ngrams
 
 
-def open_keywords(keyword_path='keywords.txt'):
-    p = pathlib.Path(keyword_path)
-    with p.open('r') as f:
+def open_keywords():
+    keywords = resource_string('nsf', 'keywords.txt')
+    with open(keywords, 'r') as f:
         return [line.strip().lower() for line in f]
 
 
@@ -27,4 +28,3 @@ def match_keywords(keywords, text, n=None):
             phrases.update([' '.join(g) for g in ngrams(words, i)])
 
     return phrases.intersection(keywords)
-
