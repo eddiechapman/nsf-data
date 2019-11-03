@@ -8,6 +8,7 @@ import datetime
 import logging
 import pathlib
 
+from nsf.award import Award
 from nsf.io import iter_awards
 from nsf.filters import filter_date, filter_directorate, filter_abstract
 from nsf.keyword import open_keywords, max_phrase_length
@@ -59,7 +60,7 @@ def main(args):
             logging.debug('...True')
             c.update({'keyword': 1})
         else:
-            loggin.debug('...False')
+            logging.debug('...False')
             continue
 
         awards.append(award)
