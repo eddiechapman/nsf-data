@@ -1,4 +1,4 @@
-import pathlib
+import logging
 import zipfile
 
 import bs4
@@ -64,7 +64,7 @@ def download(year):
 
         with file_path.open('wb') as f:
             f.write(r.content)
-            logging.info(f'Data for year {year} written to {DATA}')
+            logging.info(f'Data for year {year} written to {DATA_PATH}')
 
 
 def to_csv():
