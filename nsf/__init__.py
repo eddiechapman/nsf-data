@@ -2,9 +2,11 @@ import pathlib
 
 URL = 'https://www.nsf.gov/awardsearch/download'
 
-here = pathlib.Path(__file__)
-DATA_PATH = here.parent / 'data'
+# data paths
+AWARD_DATA = pathlib.Path(__file__).parent / 'data' / 'awards'
+KEYWORD_DATA = pathlib.Path(__file__).parent / 'data' / 'keywords'
 
+# TODO: Add directorate abbreviations for easier querying.
 DIRECTORATES = [
     'Directorate for Geosciences',
     'National Nanotechnology Coordinating Office',
