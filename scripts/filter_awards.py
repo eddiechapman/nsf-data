@@ -9,7 +9,6 @@ import logging
 import pathlib
 
 from nsf.award import Award
-from nsf.io import iter_awards
 from nsf.explore import AwardExplorer
 from nsf.filters import filter_date, filter_directorate, filter_abstract
 from nsf.keyword import open_keywords, max_phrase_length
