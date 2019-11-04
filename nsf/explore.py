@@ -3,7 +3,7 @@ import zipfile
 
 import bs4
 
-from nsf import AWARD_DATA, KEYWORD_DATA
+from nsf import AWARD_DATA 
 from nsf.award import Award
 
 
@@ -24,8 +24,8 @@ class AwardExplorer:
         for zip_file in self.iter_zip():
             logging.info(f'Unzipping {zip_file.filename}')
             for f in zip_file.filelist:
-                with zip_file.read(f) as xml:
-                    yield bs4.BeautifulSoup(xml, 'xml')
+                xml = zip_file.read(f)
+                yield bs4.BeautifulSoup(xml, 'xml')
 
     def iter_award(self):
         return (Award(soup) for soup in self.iter_xml())
