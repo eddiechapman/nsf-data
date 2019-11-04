@@ -3,17 +3,17 @@ import zipfile
 
 import bs4
 
-from nsf import AWARD_PATH, KEYWORD_PATH
+from nsf import AWARD_DATA, KEYWORD_DATA
 from nsf.award import Award
 
 
 class AwardExplorer:
     def __init__():
-        self.zip_files = [f for f in AWARD_PATH.glob('*.zip')]
+        self.zip_files = [f for f in AWARD_DATA.glob('*.zip')]
 
         if not self.zip_files:
             logging.Error(
-                f'No awards found in {AWARD_PATH}. '
+                f'No awards found in {AWARD_DATA}. '
                 f'Try downloading by year using the download.py script.'
             )
 

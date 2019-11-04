@@ -2,13 +2,13 @@ import logging
 
 import requests
 
-from nsf import AWARD_PATH, URL
+from nsf import AWARD_DATA, URL
 
 
 def download(year):
     logging.info(f'Requesting award data for year: {year}')
 
-    file_path = AWARD_PATH / f'{year}.zip'
+    file_path = AWARD_DATA / f'{year}.zip'
 
     if file_path.exists():
         logging.warn(f'File already exists: {file_path}. Skipping {year}')
