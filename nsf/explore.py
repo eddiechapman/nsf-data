@@ -18,7 +18,7 @@ class AwardExplorer:
             )
 
     def iter_zip(self):
-        return (zipfile.Zipfile(f, 'r') for f in self.zip_files)
+        return (zipfile.ZipFile(f, 'r') for f in self.zip_files)
 
     def iter_xml(self):
         for zip_file in self.iter_zip():
