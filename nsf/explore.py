@@ -8,7 +8,7 @@ from nsf.award import Award
 
 
 class AwardExplorer:
-    def __init__():
+    def __init__(self):
         self.zip_files = [f for f in AWARD_DATA.glob('*.zip')]
 
         if not self.zip_files:
