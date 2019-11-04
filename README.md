@@ -13,6 +13,15 @@ $ soure venv/bin/activate
 $ python setup.py install
 ```
 
+### Development
+
+Use the `develop` command to install the package for development. This 
+way, the package does not need to be reinstalled after every edit.
+
+```sh
+$ python setup.py develop
+```
+
 ## Usage
 
 ### Downloading award data.
