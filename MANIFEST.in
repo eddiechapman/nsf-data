@@ -1,2 +1,3 @@
 include README.md
-recursive-include *.txt *.py
+include nsf/data/awards/*zip
+include nsf/data/keywords/*.txt
