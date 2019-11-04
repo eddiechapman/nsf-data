@@ -10,6 +10,7 @@ import pathlib
 
 from nsf.award import Award
 from nsf.io import iter_awards
+from nsf.explore import AwardExplorer
 from nsf.filters import filter_date, filter_directorate, filter_abstract
 from nsf.keyword import open_keywords, max_phrase_length
 
@@ -31,11 +32,12 @@ def main(args):
     logging.info(f'Filtering records by {args.directorate}')
 
     c = collections.Counter()
-    keywords = open_keywords('../nsf/keywords.txt')
+    keywords = open_keywords()
     n = max_phrase_length(keywords)
     awards = []
+    explorer = AwardExplorer()
 
-    for award in iter_awards():
+    for award in explorer:
         logging.debug(f'Filtering award {award.id}')
         c.update({'awards': 1})
 

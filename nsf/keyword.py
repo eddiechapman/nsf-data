@@ -1,12 +1,13 @@
 import pathlib
 
-from pkg_resources import resource_string()
 from nltk import sent_tokenize, word_tokenize
 from nltk.util import ngrams
 
+from nsf import KEYWORD_PATH
+
 
 def open_keywords():
-    keywords = resource_string('nsf', 'keywords.txt')
+    keywords = KEYWORD_PATH / 'keywords.txt'
     with open(keywords, 'r') as f:
         return [line.strip().lower() for line in f]
 

@@ -5,9 +5,7 @@ import argparse
 import logging
 import pathlib
 
-import requests
-
-from nsf.io import download
+from nsf.utils import download
 
 
 def main(args):
@@ -16,10 +14,10 @@ def main(args):
         filename='download.log',
         format='%(levelname)s:%(asctime)s:%(message)s'
     )
-    
+
     for year in args.years:
         download(year)
-        
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
