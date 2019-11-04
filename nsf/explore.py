@@ -1,7 +1,7 @@
 import logging
 import zipfile
 
-import BeautifulSoup4
+import bs4
 
 from nsf import AWARD_PATH, KEYWORD_PATH
 from nsf.award import Award
