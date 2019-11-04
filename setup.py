@@ -14,6 +14,7 @@ setuptools.setup(
     include_package_data=True,
     scripts=['scripts/download.py', 'scripts/filter_awards.py'],
     install_requires=[
+        'setuptools>=41.0',
         'nltk',
         'beautifulsoup4',
         'lxml',
