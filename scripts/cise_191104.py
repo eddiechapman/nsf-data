@@ -75,13 +75,14 @@ def main(args):
     logging.info(f'By keyword:     {c["keyword"]}')
     logging.info(f'Retrieved:      {len(awards)}')
 
-    with out_path.open('w') as f:
-        logging.info(f'Writing results to file: {out_path}')
-        writer = csv.DictWriter(f, fieldnames=Award.fieldnames())
-        writer.writeheader()
-        writer.writerows([a.flatten() for a in awards])
+    if awards:
+        with out_path.open('w') as f:
+            logging.info(f'Writing results to file: {out_path}')
+            writer = csv.DictWriter(f, fieldnames=awards[0].flatten().keys())
+            writer.writeheader()
+            writer.writerows([a.flatten() for a in awards])
 
-    logging.info(f'Filtering complete. Results are located: {out_path}')
+        logging.info(f'Filtering complete. Results are located: {out_path}')
 
 
 if __name__ == '__main__':
