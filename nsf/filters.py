@@ -29,7 +29,7 @@ def filter_abstract(award):
     return True
 
 
-def match_keywords(keywords, text, n=None):
+def match_keywords(text):
     hits = collections.Counter()
 
     with open(KEYWORD_DATA / 'keywords.txt', 'r') as f:
