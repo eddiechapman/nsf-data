@@ -159,11 +159,7 @@ class Award:
             'investigators': self.flat_investigators(),
             'program_officers': '\n'.join(self.program_officers)
         }
-    
-    @classmethod
-    def fieldnames(cls):
-        return self.flatten().keys()
-    
+ 
     @property
     def filename(self):
         return f'{self.id}.xml'
