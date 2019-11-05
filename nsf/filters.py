@@ -31,10 +31,10 @@ def filter_abstract(award):
 
 def match_keywords(text):
     hits = collections.Counter()
-
-    with open(KEYWORD_DATA / 'keywords.txt', 'r') as f:
+    p = KEYWORD_DATA / 'keywords.txt'
+    with p.open('r') as f:
         for search_term in f:
-            for match in re.finditer(search_term, text, re.I):
+            for match in re.finditer(search_term.strip(), text, re.I):
                 hits.update({search_term: 1})
 
     if not hits:
