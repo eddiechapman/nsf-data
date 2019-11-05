@@ -12,7 +12,7 @@ setuptools.setup(
     url="https://github.com/eddiechapman/nsf-data",
     packages=setuptools.find_packages(),
     include_package_data=True,
-    scripts=['scripts/download.py', 'scripts/filter_awards.py'],
+    scripts=['scripts/download.py', 'scripts/cise_191104.py'],
     install_requires=[
         'beautifulsoup4',
         'lxml',
