@@ -14,10 +14,10 @@ setuptools.setup(
     include_package_data=True,
     scripts=['scripts/download.py', 'scripts/filter_awards.py'],
     install_requires=[
-        'setuptools>=41.6',
         'nltk',
         'beautifulsoup4',
         'lxml',
         'requests',
-    ]
+    ],
+    extras_require={'dev': ['flake8']}
 )
