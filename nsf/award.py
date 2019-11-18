@@ -2,6 +2,7 @@
 Extracts and stores information for an NSF award record.
 """
 import datetime
+import html
 
 
 class Award:
@@ -11,6 +12,7 @@ class Award:
         self.title = self.text('AwardTitle')
         self.id = self.text('AwardID')
         self.abstract = self.text('AbstractNarration')
+        self.clean_abstract()
         
         self.instruments = [t.text for t in soup.find_all('Value')]
         
@@ -125,6 +127,14 @@ class Award:
             investigators.append(flat_inv)
         return '\n'.join(investigators)
 
+    def clean_abstract(self):
+        with_html_tags = html.unescape(self.abstract)
+        abstract_cleaned = with_html_tags.replace(' <br/>', '\n')
+        abstract_cleaned = abstract_cleaned.replace('<br/>', '\n')
+        abstract_cleaned = abstract_cleaned.replace('<br/> ', '\n')
+        abstract_cleaned = abstract_cleaned.replace(' <br/> ', '\n')
+        self.abstract = abstract_cleaned
+
     def text(self, name):
         tag = self.soup.find(name)
         if tag:
@@ -150,14 +160,12 @@ class Award:
             'expires': self.expires,
             'first_amended': self.first_amended,
             'amount': self.amount,
-            'arra_amount': self.arra_amount,
             'directorate': self.directorate,
             'division': self.division,
             'pgm_elements': self.flat_pgm_elements(),
             'pgm_refs': self.flat_pgm_references(),
             'institutions': self.flat_institutions(),
             'investigators': self.flat_investigators(),
-            'program_officers': '\n'.join(self.program_officers)
         }
  
     @property
