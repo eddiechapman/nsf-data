@@ -14,9 +14,10 @@ import datetime
 import logging
 import pathlib
 
-from nsf.award import Award
 from nsf.explore import AwardExplorer
-from nsf.filters import filter_date, filter_directorate, filter_abstract
+from nsf.filters import (
+    filter_date, filter_directorate, filter_abstract, filter_unique
+)
 
 
 def main(args):
@@ -65,6 +66,14 @@ def main(args):
             logging.debug('...False')
             continue
 
+        logging.debug('Filtering unique')
+        if filter_unique(award, awards):
+            logging.debug('...True')
+            c.update({'unique': 1})
+        else:
+            logging.debug('...False')
+            continue
+
         awards.append(award)
         logging.debug(f'Passed all filters: award # {award.id}')
 
@@ -73,6 +82,7 @@ def main(args):
     logging.info(f'By date:        {c["date"]}')
     logging.info(f'By directorate: {c["directorate"]}')
     logging.info(f'By keyword:     {c["keyword"]}')
+    logging.info(f'By uniqueness:  {c["unique"]}')
     logging.info(f'Retrieved:      {len(awards)}')
 
     if awards:

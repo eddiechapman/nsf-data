@@ -43,5 +43,11 @@ def match_keywords(text):
     return hits
 
 
+def filter_unique(award, awards):
+    titles = set(award.title.lower().strip() for award in awards)
+    titles = sorted(titles)
+    return not award.title.lower().strip() in titles
+
+
 class SearchTermsNotFound(Exception):
     pass
